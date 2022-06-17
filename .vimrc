@@ -2,6 +2,10 @@
 set relativenumber
 
 
+" Sane deletion
+set backspace=indent,eol,start
+
+
 " Misc
 set hlsearch
 set nowrapscan      " don't wrap searches beyond end of file
@@ -50,49 +54,48 @@ function! s:main_setup()
   " Download plugins
   let s:plugins = {
     \'git': {
-      \'pack/shames0/opt': [
-        \'https://github.com/editorconfig/editorconfig-vim',
-        \'https://github.com/tpope/vim-fugitive',
+      \'pack/shames0/start': [
         \'https://github.com/nathanaelkane/vim-indent-guides',
-        \'https://github.com/sainnhe/everforest',
+      \],
+      \'pack/shames0/opt': [
+        \'https://github.com/altercation/vim-colors-solarized',
+        \'https://github.com/editorconfig/editorconfig-vim',
+        \'https://github.com/itchyny/lightline.vim',
+        \'https://github.com/tpope/vim-fugitive',
+        \'https://github.com/w0rp/ale',
       \],
     \},
     \'curl': {
-      \'pack/shames0/start/prefs/autoload': [
+      \'pack/shames0': [
         \'https://raw.githubusercontent.com/klp2/dc_eqalignssimple/master/plugin/eqalignsimple.vim',
-        \'https://raw.githubusercontent.com/shames0/my-vim-config/master/.vim/prefs/editorconfig.vim',
-        \'https://raw.githubusercontent.com/shames0/my-vim-config/master/.vim/prefs/indent_guides.vim',
+        \'https://github.com/shames0/vim-config-2022/eqalignsimple.vim',
+        \'https://github.com/shames0/vim-config-2022/lightline_prefs.vim',
+        \'https://github.com/shames0/vim-config-2022/editorconfig_prefs.vim',
+        \'https://github.com/shames0/vim-config-2022/ale_prefs.vim',
       \],
     \},
   \}
   call s:ensure_installed(s:plugins)
 
-
   " Syntax highlighting
+  packadd! vim-colors-solarized    " use solarized theme plugin
   syntax enable
+  " let g:solarized_termtrans=1      " not needed all the time
+  set background=dark
+  colorscheme solarized
 
+  packadd! vim-fugitive            " use vim-fugitive plugin
+  execute 'source ~/.vim/pack/shames0/eqalignsimple.vim'
 
-  if has('termguicolors')
-    "" configurations for my first-choice colorscheme
-    set termguicolors     " enable 'true color'
+  packadd! lightline.vim           " use lightline plugin
+  execute 'source ~/.vim/pack/shames0/lightline_prefs.vim'
 
-    "" These are required to allow guicolors to work within tmux and screen
-    "  (My understanding is that these are auto-loaded by vim if TERM is
-    "  xterm, but they have to be forced otherwise)
-    let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
-    let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+  packadd! editorconfig-vim
+  execute 'source ~/.vim/pack/shames0/editorconfig_prefs.vim'
 
-    packadd! everforest   " import desired colorscheme from .vim/pack/shames0/opt
-    set background=dark
+  " packadd! ale
+  " execute 'source ~/.vim/pack/shames0/ale_prefs.vim'
 
-    let g:everforest_background = 'hard'
-    let g:everforest_enable_italic = 0
-    let g:everforest_disable_italic_comment = 1
-
-    colorscheme everforest
-  else
-    colorscheme slate
-  endif
 endfunction
 
 
