@@ -68,10 +68,10 @@ function! s:main_setup()
     \'curl': {
       \'pack/shames0': [
         \'https://raw.githubusercontent.com/klp2/dc_eqalignssimple/master/plugin/eqalignsimple.vim',
-        \'https://github.com/shames0/vim-config-2022/eqalignsimple.vim',
-        \'https://github.com/shames0/vim-config-2022/lightline_prefs.vim',
-        \'https://github.com/shames0/vim-config-2022/editorconfig_prefs.vim',
-        \'https://github.com/shames0/vim-config-2022/ale_prefs.vim',
+        \'https://raw.githubusercontent.com/shames0/vim-config-2022/main/.vim/pack/shames0/eqalignsimple.vim',
+        \'https://raw.githubusercontent.com/shames0/vim-config-2022/main/.vim/pack/shames0/lightline_prefs.vim',
+        \'https://raw.githubusercontent.com/shames0/vim-config-2022/main/.vim/pack/shames0/editorconfig_prefs.vim',
+        \'https://raw.githubusercontent.com/shames0/vim-config-2022/main/.vim/pack/shames0/ale_prefs.vim',
       \],
     \},
   \}
