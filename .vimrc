@@ -46,7 +46,6 @@ endfunction
 " Function to swap to second choice colorscheme
 command! Co call s:SwapColors()
 function! s:SwapColors()
-  set notermguicolors
   colorscheme slate
 endfunction
 
