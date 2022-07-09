@@ -71,6 +71,7 @@ function! s:main_setup()
         \'https://raw.githubusercontent.com/shames0/vim-config-2022/main/.vim/pack/shames0/lightline_prefs.vim',
         \'https://raw.githubusercontent.com/shames0/vim-config-2022/main/.vim/pack/shames0/editorconfig_prefs.vim',
         \'https://raw.githubusercontent.com/shames0/vim-config-2022/main/.vim/pack/shames0/ale_prefs.vim',
+        \'https://raw.githubusercontent.com/shames0/vim-config-2022/main/.vim/pack/shames0/indent_guides_prefs.vim',
       \],
     \},
   \}
@@ -79,12 +80,13 @@ function! s:main_setup()
   " Syntax highlighting
   packadd! vim-colors-solarized    " use solarized theme plugin
   syntax enable
-  " let g:solarized_termtrans=1      " not needed all the time
+  let g:solarized_termtrans=1      " not needed all the time
   set background=dark
   colorscheme solarized
 
   packadd! vim-fugitive            " use vim-fugitive plugin
   execute 'source ~/.vim/pack/shames0/eqalignsimple.vim'
+  execute 'source ~/.vim/pack/shames0/indent_guides_prefs.vim'
 
   packadd! lightline.vim           " use lightline plugin
   execute 'source ~/.vim/pack/shames0/lightline_prefs.vim'
