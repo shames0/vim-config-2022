@@ -12,7 +12,7 @@ set nowrapscan      " don't wrap searches beyond end of file
 set laststatus=2    " always show a statusline on "last window"
 set scrolloff=2     " min number of lines to show before and after the cursor when scrolling
 set encoding=utf-8  " default encoding
-set synmaxcol=-1    " max columns to do syntax parsing for on a line (smaller number = faster redraw)
+set synmaxcol=0     " max columns to do syntax parsing for on a line (smaller number = faster redraw)
 
 
 " Tabs
