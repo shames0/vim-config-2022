@@ -8,7 +8,7 @@ set backspace=indent,eol,start
 
 " Misc
 set hlsearch
-set nowrapscan      " don't wrap searches beyond end of file
+" set nowrapscan    " don't wrap searches beyond end of file
 set laststatus=2    " always show a statusline on "last window"
 set scrolloff=2     " min number of lines to show before and after the cursor when scrolling
 set encoding=utf-8  " default encoding
@@ -28,20 +28,12 @@ set wildmenu
 set wildmode=list:longest
 
 
-" Highlight unwanted whitespace
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-
-
 " Function to remove trailing whitespace
 command! Rtrim call s:rtrim()
 function! s:rtrim()
   %s/\s\+$//g
 endfunction
+
 
 " Function to swap to second choice colorscheme
 command! Co call s:SwapColors()
@@ -49,6 +41,15 @@ function! s:SwapColors()
   colorscheme slate
 endfunction
 
+
+" Use 'the-silver-searcher ag' as grep program if available
+if executable('ag')
+  set grepprg=ag\ --vimgrep\ $*
+  set grepformat^=%f:%l:%c:%m
+endif
+
+
+" Download missing plugins and whatnot
 function! s:main_setup()
   " Download plugins
   let s:plugins = {
@@ -61,6 +62,7 @@ function! s:main_setup()
         \'https://github.com/editorconfig/editorconfig-vim',
         \'https://github.com/itchyny/lightline.vim',
         \'https://github.com/tpope/vim-fugitive',
+        \'https://github.com/tommcdo/vim-fubitive',
         \'https://github.com/w0rp/ale',
       \],
     \},
@@ -78,13 +80,18 @@ function! s:main_setup()
   call s:ensure_installed(s:plugins)
 
   " Syntax highlighting
-  packadd! vim-colors-solarized    " use solarized theme plugin
+  " packadd! vim-colors-solarized    " use solarized theme plugin
   syntax enable
-  let g:solarized_termtrans=1      " not needed all the time
+
+  " let g:solarized_termtrans=1      " not needed all the time
   set background=dark
-  colorscheme solarized
+  "colorscheme solarized
+  colorscheme slate
 
   packadd! vim-fugitive            " use vim-fugitive plugin
+  packadd! vim-fubitive            " use vim-fubitive plugin (bitbucket plugin)
+  let g:fubitive_domain_pattern = 'bitbucket.org'
+
   execute 'source ~/.vim/pack/shames0/eqalignsimple.vim'
   execute 'source ~/.vim/pack/shames0/indent_guides_prefs.vim'
 
@@ -94,8 +101,18 @@ function! s:main_setup()
   packadd! editorconfig-vim
   execute 'source ~/.vim/pack/shames0/editorconfig_prefs.vim'
 
-  " packadd! ale
-  " execute 'source ~/.vim/pack/shames0/ale_prefs.vim'
+  packadd! ale
+  execute 'source ~/.vim/pack/shames0/ale_prefs.vim'
+  let g:ale_set_quickfix = 1
+
+
+  " Highlight unwanted whitespace (must be executed after 'colorscheme')
+  highlight ExtraWhitespace ctermbg=red guibg=red
+  match ExtraWhitespace /\s\+$/
+  autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+  autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+  autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+  autocmd BufWinLeave * call clearmatches()
 
 endfunction
 
@@ -130,5 +147,6 @@ function! s:ensure_installed(plugins)
     endfor
   endfor
 endfunction
+
 
 call s:main_setup()
